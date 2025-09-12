@@ -44,43 +44,28 @@ export class LeadService {
         lastName: leadData.name.split(' ').slice(1).join(' ') || '',
         email: leadData.email,
         phone: leadData.phone || '',
-        companyName: leadData.company || ''
+        companyName: leadData.company || '',
+        tags: ["DeepTrust AI Early Access"],
+        customFields: [
+          {
+            key: "job_title",
+            value: leadData.jobTitle || ''
+          },
+          {
+            key: "company_url", 
+            value: leadData.companyWebsite || ''
+          }
+        ]
       };
-
-      // Prepare contact data for Go High Level
-      // const contactData = {
-      //   locationId: GHL_LOCATION_ID,
-      //   firstName: leadData.name.split(' ')[0] || leadData.name,
-      //   lastName: leadData.name.split(' ').slice(1).join(' ') || '',
-      //   email: leadData.email,
-      //   phone: leadData.phone || '',
-      //   companyName: leadData.company || '',
-      //   customFields: [
-      //     {
-      //       id: "customFieldIdForJobTitle", // <-- replace with actual Job Title custom field ID from GHL
-      //       value: leadData.jobTitle || ""
-      //     },
-      //     {
-      //       id: "customFieldIdForWebsite", // <-- replace with actual Website custom field ID
-      //       value: leadData.companyWebsite || ""
-      //     },
-      //     {
-      //       id: "customFieldIdForType", // <-- replace with actual Type custom field ID
-      //       value: "lead"
-      //     }
-      //   ]
-      // };
-
-
       // Create contact in Go High Level
       const response = await ghl.contacts.createContact(contactData);
 
-      console.log(response);
+      console.log("New Lead Created, GHL Response:", response);
 
       if (!response || !response.contact || !response.contact.id) {
         throw new Error('Failed to create lead in Go High Level - unexpected response format');
       }
-      
+
       return {
         leadId: response.contact.id,
         message: 'Lead has been created and added to Go High Level contacts'
