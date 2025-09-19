@@ -21,6 +21,7 @@
   "homepage": "https://github.com/hafizasad419/affiniti-solutions-backend#readme",
   "description": "",
   "devDependencies": {
+    "@types/node": "^24.5.2",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.10"
   },
